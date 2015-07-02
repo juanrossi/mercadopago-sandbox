@@ -1,0 +1,161 @@
+<% include ../layout/header %>
+
+
+	<%
+		var user = identifyUserByPayment(payment);
+		var user_role = user.user_role;
+		var class_price = getClassByStatus(user_role, payment.status);
+		var title = getTitleByUserRole(user_role)
+	%>
+
+	<a href="/<%= user_role%>/payments" class="link_return go-back"> Voltar </a>
+
+	<div id="contet_details_payment">
+		
+		<div class="payment_detail_item">
+			
+			<div class="detail_item_content box_padding_customized">
+				<div class="box-icon">
+					<div class="regular-payments-icon"></div>
+				</div>
+				<div class="transaction_amount <%= class_price %>">
+					<%- getFormatClassAmount(payment.transaction_amount) %>
+				</div>
+				<span class="description"><%= payment.description %></span>
+				<div class="box_status">
+					<span class="status">
+						<%= payment.status %>
+					</span> | 
+					<span class="status_detail">
+						<%= payment.status_detail %>
+					</span>
+				</div>
+
+				<div class="box_external_reference">
+					Referência: <%= payment.external_reference %>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="payment_detail_item">
+			
+			<h3 class="detail_item_title">
+				<%= title.detail_pago %> <span class="operation-number">&nbsp;#<%= payment.id %></span>
+			</h3>
+
+			<div class="detail_item_content">
+				
+				<div class="detail_payment_method">
+					<img src="https://www.mercadopago.com/org-img/MP3/API/logos/<%= payment.payment_method_id%>.gif">  realizado em <%= moment(payment.date_created).format('DD/MM/YYYY hh:mm:ss') %>
+				</div>
+
+				<dl class="detail_movement">
+					<dt><%= title.detail_pago %></dt>
+					<dd>
+						<div class="price-small">
+							<%- getFormatClassAmount(payment.transaction_amount) %>
+						</div>
+					</dd>
+					
+					<% if(user_role == "collector"){ %>
+
+						<% (payment.fee_details).forEach(function(fee) { 
+							if(fee.fee_payer == "collector"){ %>
+								<dt><%= fee.type %>	</dt>
+								<dd>
+									<div class="price-small">
+										<%- getFormatClassAmount(fee.amount, true) %>
+									</div>
+								</dd>
+							<% } %>
+						<% }) %>
+
+						<div class="detail_movement_total">
+							<dt class="total">Total pago</dt>
+							<dd>
+								<div class="price-small">
+									<%- getFormatClassAmount(payment.transaction_details.net_received_amount) %>
+								</div>
+							</dd>
+						</div>
+
+					<% }else{ %>
+
+						<% (payment.fee_details).forEach(function(fee) { 
+							if(fee.fee_payer == "payer"){ %>
+								<dt><%= fee.type %>	</dt>
+								<dd>
+									<div class="price-small">
+										<%- getFormatClassAmount(fee.amount, true) %>
+									</div>
+								</dd>
+							<% } %>
+						<% }) %>
+
+						<div class="detail_movement_total">
+							<dt>Total Recebido</dt>
+							<dd>
+								<div class="price-small">
+									<%- getFormatClassAmount(payment.transaction_details.total_paid_amount) %>
+								</div>
+							</dd>
+						</div>
+					<% } %>
+				
+
+					<dt></dt>
+<dd>
+(<%= payment.installments %> de <span class="price-small installment"><%- getFormatClassAmount(payment.transaction_details.installment_amount) %></span>)
+</dd>
+				</dl>	
+			</div>
+
+		</div>
+		
+		<div class="payment_detail_item">
+			
+			<h3 class="detail_item_title">
+				<%= title.user_part %>
+			</h3>
+
+			<div class="detail_item_content">
+				<div class="user_part">
+					<p class="user_part_name"><%= user.details.first_name %> <%= user.details.last_name %></p>
+					<p class="user_part_nickname"><%= user.details.nickname %></p>
+					<p class="user_part_email">
+						<i class="ch-icon-envelope-alt"></i>
+						<a href="mailto:<%= user.details.email %>">
+							<%= user.details.email %>
+						</a>
+					</p>
+					<p class="user_part_phone">
+						<i class="ch-icon-phone"></i>
+						<a href="tel:<%= user.details.phone.area_code %> <%= user.details.phone.number %>">
+							<%= user.details.phone.area_code %> <%= user.details.phone.number %>
+						</a>					
+					</p>
+				</div>
+			</div>
+			
+		</div>
+
+		<div class="payment_detail_item">
+			
+			<h3 class="detail_item_title">
+				Ações
+			</h3>
+
+			<div class="detail_item_content">
+
+			</div>
+			
+		</div>
+
+<pre>
+		<%= JSON.stringify(payment, null, 4) %>
+</pre>
+
+	</div>
+
+<% include ../layout/footer %>

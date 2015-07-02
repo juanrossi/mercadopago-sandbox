@@ -1,0 +1,49 @@
+<% include ../layout/header %>
+	<%
+		var title = getTitleByUserRole(user_role)
+	%>
+	<h2> <%= title.index %> </h2>
+
+	<ul id="list-payments">
+
+		<% payments.forEach(function(payment) { 
+			var class_price = getClassByStatus(user_role, payment.status);
+		%>
+
+	        <li class="payment">
+
+	        	<div class="detail_item">
+		        	<div class="regular-payments-icon"></div>
+
+					<div class="detail_item_info">
+						<div class="transaction_amount <%= class_price %>">
+
+							<%- getFormatClassAmount(payment.transaction_amount) %>
+
+						</div>
+
+		        		<span class="description"><%= payment.description %></span>
+		        		<a class="payer_email" href="mailto:<%= payment.payer.email %>"><%= payment.payer.email %></a>
+		        	</div>
+
+					<div class="detail_item_info">
+						<div class="box-status">
+				        	<span class="status"><%= payment.status %></span>
+				        	| <span class="status_detail"><%= payment.status_detail %></span>
+			        	</div>
+			        	<span class="payer_nickname"><%= payment.payer.nickname %></span>
+					</div>
+
+					<div class="detail_item_info">
+		        		<a href="/payment/details/<%= payment.id %>" class="view_detail">Ver detalhe</a>
+		        	</div>
+	        	</div>
+
+	        	<!--<pre><%= JSON.stringify(payment, null, "\t") %></pre>-->
+	        </li>
+	    <% }); %>
+	</ul>
+
+	<%= JSON.stringify(paging) %>
+
+<% include ../layout/footer %>

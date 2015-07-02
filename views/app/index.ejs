@@ -1,0 +1,52 @@
+<html>
+
+	<head>
+		<title> MercadoPago | Sandbox</title>
+		<link rel="stylesheet" href="https://static.mlstatic.com/org-img/ch/ui/1.1.1/themes/mp/chico.min-0.0.2.css">
+		<link rel="stylesheet" href="/stylesheet/layout/index.css">
+
+		<script src="/javascript/default/jquery-1.11.1.js"></script>
+        <script src="/javascript/default/index.js"></script>
+	</head>
+
+	<body>
+
+		<div id="content">
+
+			<div id="box_logo">
+		        <span id="logo"></span>
+		        <span id="line"></span>
+		        <span id="sandbox">Sandbox</span>
+	        </div><!-- end box_logo -->
+
+
+	        <div id="box_auth">
+	        	
+	        	<h3>MercadoPago (MP Connect)</h3>
+
+	        	<a href="<%= url_app %>" class="ch-btn ch-btn-big">Autenticar</a>
+
+	        	<br/>
+	        	
+	        	<span class="auth_by_access_token">Autenticação com access_token de test</span>
+	        </div> <!-- end box_auth -->
+
+	        
+
+	        <div id="box_token">
+
+	        	<h3><b>access_token</b> de test</h3>
+				
+				<form action="/mercadopago/by_access_token">
+					<input id="access_token" type="text" name="access_token" size="35" data-side="right" data-align="top">
+					<button class="ch-btn ch-btn-big">Entrar</button>
+				</form>
+	        	
+	        	<span class="auth_by_mp_connect">Autenticação com MP Connect</span>
+
+	        </div>
+
+	    </div> <!-- end content -->
+
+	</body>
+</html>
