@@ -1,6 +1,7 @@
 module.exports = function (app) {
 
 	var client_id = "2364998264727646"
+    var client_secret = "mEYcJqatS9GXi1z1FOalDATkUvgyvh5m"
 	var access_token_ll_sandbox = "TEST-2364998264727646-061816-e8643010cdb84e4ff8bcd54101b891f5__LC_LB__-95095923"
 	var public_key_sandbox = "TEST-6eff9791-0b45-47a7-a39b-3b1100ca023f"
 	var redirect_uri = "http://mercadopago-sandbox.herokuapp.com/mercadopago/code"
