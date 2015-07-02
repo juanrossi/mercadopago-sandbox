@@ -12,13 +12,7 @@ var express = require('express'),
     mercadopago = require('mercadopago');
 
 // set port
-server.listen(5000, function(){
-
-    console.log("------------------------");
-    console.log("Server is running...");
-    console.log("------------------------");
-    
-});
+app.set('port', (process.env.PORT || 5000));
 
 //set diretorio de view
 app.set('views', __dirname + '/views');
@@ -52,5 +46,12 @@ load('models')
     .then('helpers')
     .into(app);
 
+
+app.listen(app.get('port'), function() {
+    console.log("------------------------");
+    console.log("Server is running...");
+    console.log('Node app is running on port', app.get('port'));
+    console.log("------------------------");
+});
 
 
