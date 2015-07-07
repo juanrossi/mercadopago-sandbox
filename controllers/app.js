@@ -28,12 +28,17 @@ module.exports = function (app) {
             if(page != undefined){
                 //pagina sempre comeca com 1
                 offset = (page * limit) - limit;
+            }else{
+                page = 1;
             }
 
             var params = {
                 "user_role": user_role,
                 limit: limit,
-                offset: offset
+                offset: offset,
+                sort: "date_created",
+                criteria: "desc"
+
             }
 
             MP.get("/v1/payments/search", params, function(error, r){
@@ -41,11 +46,14 @@ module.exports = function (app) {
                     res.json({error: error});
                     return;
                 }
+                //add page
+                r.response.paging.page = page;
 
                 var params = {
                     payments: r.response.results,
                     paging: r.response.paging,
-                    user_role: user_role
+                    user_role: user_role,
+                    moment: app.moment
                 }
                 
                 res.render("app/list", params);
@@ -71,10 +79,6 @@ module.exports = function (app) {
                 
                 res.render("app/payment_details", params);
             });
-        },
-
-        lol: function (req, res){
-            res.render("app/lol")
         }
 
     };

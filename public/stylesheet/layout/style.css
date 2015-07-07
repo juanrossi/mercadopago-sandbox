@@ -219,6 +219,20 @@ header{
 	line-height: 20px;
 }
 
+.group_by_date{
+	margin: 8px 0;
+	float: left;
+	width: 100%;
+}
+
+.group_by_date time{
+	margin-left: 10px;
+	margin-bottom: 5px;
+	display: block;
+	font-size: 13px;
+	color: #999;
+}
+
 .detail_item{
 	padding: 15px 10px 10px 110px;
 	min-height: 85px;
@@ -524,4 +538,37 @@ h3.detail_item_title .operation-number{
 }
 .user_part_nickname{
 	text-transform: uppercase;
+}
+
+
+
+
+
+#paginator{
+	width: 1180px;
+	text-align: center;
+	margin: 20px 0 30px 0;
+	display: inline-block;
+}
+#paginator li{
+	display: inline;
+	margin: 0 5px;
+}
+#paginator li a, #paginator li a:visited{
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding: 5px 8px;
+	text-decoration: none;
+	color: #06C;
+}
+
+#paginator li a:hover {
+  background-color: #0099e3;
+  border-color: #fff;
+  color: #fff;
+}
+
+#paginator li.page_selected a {
+  background-color: #ccc;
 }

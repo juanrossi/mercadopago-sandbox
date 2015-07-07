@@ -1,15 +1,22 @@
 <% include ../layout/header %>
 	<%
 		var title = getTitleByUserRole(user_role)
+
 	%>
 	<h2> <%= title.index %> </h2>
 
 	<ul id="list-payments">
 
-		<% payments.forEach(function(payment) { 
-			var class_price = getClassByStatus(user_role, payment.status);
+		<% 
+			var date_group = "";
+			payments.forEach(function(payment) { 
+
+				var class_price = getClassByStatus(user_role, payment.status);
+				var user_info = payment[invertUserRole(user_role)]
+				date_group = groupDateDiv(date_group, moment(payment.date_created).lang("pt").format('DD [de] MMMM'));
 		%>
 
+			<%- date_group.div %>
 	        <li class="payment">
 
 	        	<div class="detail_item">
@@ -23,7 +30,7 @@
 						</div>
 
 		        		<span class="description"><%= payment.description %></span>
-		        		<a class="payer_email" href="mailto:<%= payment.payer.email %>"><%= payment.payer.email %></a>
+		        		<a class="payer_email" href="mailto:<%= user_info.email %>"><%= user_info.email %></a>
 		        	</div>
 
 					<div class="detail_item_info">
@@ -31,7 +38,7 @@
 				        	<span class="status"><%= payment.status %></span>
 				        	| <span class="status_detail"><%= payment.status_detail %></span>
 			        	</div>
-			        	<span class="payer_nickname"><%= payment.payer.nickname %></span>
+			        	<span class="payer_nickname"><%= user_info.nickname %></span>
 					</div>
 
 					<div class="detail_item_info">
@@ -39,11 +46,12 @@
 		        	</div>
 	        	</div>
 
-	        	<!--<pre><%= JSON.stringify(payment, null, "\t") %></pre>-->
 	        </li>
 	    <% }); %>
 	</ul>
 
-	<%= JSON.stringify(paging) %>
+	<%- makePaginator(paging) %>
+	
 
 <% include ../layout/footer %>
+
