@@ -2,23 +2,32 @@ module.exports = function (app) {
     
     var AppController = {
 
-
         index: function (req, res) {
-            var mercadopago = app.models.MercadoPago;
-            var url = mercadopago.get_url_auth();
+            
 
-            var params = {
-                url_app: url
-            }
+            if(typeof req.session.credentials != 'undefined'){
+                //caso tenha sessao ativa redireciona para a conta grafica
+                res.redirect("/collector/payments");
+            }else{
 
-            if(typeof req.query.error != 'undefined' && req.query.error == 'access_token_test'){
-                params.error = {
-                    message: "O access_token utilizado não é de teste",
-                    type: "error"
+                var mercadopago = app.models.MercadoPago;
+                var url = mercadopago.get_url_auth();
+
+                var params = {
+                    url_app: url
                 }
+
+                if(typeof req.query.error != 'undefined' && req.query.error == 'access_token_test'){
+                    params.error = {
+                        message: "O access_token utilizado não é de teste",
+                        type: "error"
+                    }
+                }
+
+                res.render("app/index", params);
             }
 
-            res.render("app/index", params);
+            
         },
 
         list: function (req, res) {

@@ -7,15 +7,10 @@ module.exports = function (app) {
             if(typeof req.session.credentials != 'undefined'){
                 console.log(req.session.credentials);
                 next();
-                return;
+                return true;
             }else{
-                var mercadopago = app.models.MercadoPago;
-
-                //caso não esteja autenticado redireciona para a tela de autorização da aplicação
-                var url = mercadopago.get_url_auth();
-                console.log("Usuario redirecionado para autorização da aplicação: ", url);
-                res.redirect(url);
-                return;
+                res.redirect("/");
+                return false;
             }
 
 
