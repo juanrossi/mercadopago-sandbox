@@ -1,9 +1,10 @@
 $(document).ready(function() {
 	
-    $("#amountToRefundByUser").focusout(function(){
+    $("input[name=amountToRefundByUser]").focusout(function(){
         var $amount_user = $(this);
+        var $amount_refund = $("input[name=amountToRefund]");
 
-        console.log($amount_user.val());
+        console.log($amount_user.val(), $amount_refund.val());
     });
 
 	/*$(".head-group-details").click(function(){
