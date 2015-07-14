@@ -2,6 +2,8 @@
 
 	<head>
 		<title> Sandbox | MercadoPago</title>
+		<link rel="shortcut icon" href="/favicon.ico">
+		
 		<link rel="stylesheet" href="https://static.mlstatic.com/org-img/ch/ui/1.1.1/themes/mp/chico.min-0.0.2.css">
 		<link rel="stylesheet" href="/stylesheet/layout/index.css">
 
@@ -11,7 +13,20 @@
 
 	<body>
 
+		
+		
+
+		
+
 		<div id="content">
+
+		<% if(typeof error != "undefined"){ %>
+			
+			<div class="message <%= error.type %>">
+				<%= error.message %>
+			</div>
+
+		<% } %>
 
 			<div id="box_logo">
 		        <span id="logo"></span>
@@ -36,7 +51,7 @@
 
 	        <div id="box_token">
 
-	        	<h3><b>access_token</b> de test</h3>
+	        	<h3>Autenticar com <b>access_token</b> de test</h3>
 				
 				<form action="/mercadopago/by_access_token">
 					<input id="access_token" type="text" name="access_token" size="35" data-side="right" data-align="top">

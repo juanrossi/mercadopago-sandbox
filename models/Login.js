@@ -5,6 +5,7 @@ module.exports = function (app) {
         isLogged: function (req, res, next) {
 
             if(typeof req.session.credentials != 'undefined'){
+                console.log(req.session.credentials);
                 next();
                 return;
             }else{
@@ -26,6 +27,18 @@ module.exports = function (app) {
         generateSession: function (req, credentials){
             req.session.credentials = credentials;
             return req.session.credentials;
+        },
+
+        generateSessionByAccessToken: function(req, access_token){
+            var Login = this;
+            var split_access_token = access_token.split("-");
+
+            if(split_access_token[0] != 'TEST'){
+                return {"error": "access_token_not_test"}
+            }
+
+            return Login.generateSession(req, {access_token: access_token});
+            
         },
 
         // deleta session

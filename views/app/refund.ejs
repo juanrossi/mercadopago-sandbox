@@ -1,0 +1,80 @@
+<% include ../layout/header %>
+
+<script src="/javascript/payment/refund.js"></script>
+
+<h2>Devolver dinheiro</h2>
+
+<%
+	
+	var refunds = payment.refunds;
+	var transaction_to_refund = (payment.transaction_amount - payment.transaction_amount_refunded).toFixed(2);
+
+	var transaction_amount = payment.transaction_amount;
+%>
+
+<div id="box-refund">
+	<p>Contraparte: <strong><%= payment.payer.first_name %></strong> (<%= payment.payer.email %>)</p>
+
+	<form id="form-refund" action="/payment/refund" method="POST"> 
+		<ul class="list-items-refund">	
+			<li>	
+				<div class="date">	
+					<%= moment(payment.date_created).format("DD/MM/YYYY") %>	
+				</div>	
+				<div class="reason">	
+					Recebimento	(<%= payment.id %>)	
+				</div>	
+				<div class="price">	
+					R$ <%= transaction_amount %>
+				</div>	
+			</li>	
+			
+			<% refunds.forEach(function(refund){ %>
+
+				<li class="partial-refund" >
+					<div class="label-partial-refund">
+						Devolução parcial
+					</div>
+					<div class="price">
+						- R$ <%= refund.amount %>
+					</div>
+				</li>
+
+			<% }); %>
+
+			
+
+			<li class="row-total-refund">	
+				<div class="label-total-refund">
+					Valor a devolver:
+				</div>	
+				<div class="price">	
+					R$ <input autocomplete="off" type="text" class="large" name="
+					amountToRefundByUser" value="<%= transaction_to_refund %>" id="amountToRefundByUser">	
+				</div>	
+			</li>
+
+		</ul>
+
+		<div id="divTotal" class="ch-box-content box-total-amount-refund">	
+			<span class="label-total-amount-refund">Total a devolver</span>	
+			<span class="ch-price">R$</span>	
+			<span id="amountToRefund" class="ch-price"><%= transaction_to_refund %></span>	
+			<input type="hidden" name="amountToRefund" value="<%= transaction_to_refund %>">
+			<input type="hidden" name="payment_id" value="<%= payment.id %>">
+		</div>
+		
+		<div class="actions-refund">
+			<input id="submitButton" class="btn-refund" type="submit" value="Devolver dinheiro">
+
+			<a href="/collector/payments">Cancelar</a>
+		</div>
+	</form>
+
+</div>
+
+<pre>
+	<%= JSON.stringify(payment, null, '\t' ) %>
+</pre>
+
+<% include ../layout/footer %>

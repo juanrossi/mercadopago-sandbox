@@ -11,6 +11,13 @@ module.exports = function (app) {
                 url_app: url
             }
 
+            if(typeof req.query.error != 'undefined' && req.query.error == 'access_token_test'){
+                params.error = {
+                    message: "O access_token utilizado não é de teste",
+                    type: "error"
+                }
+            }
+
             res.render("app/index", params);
         },
 
@@ -79,7 +86,47 @@ module.exports = function (app) {
                 
                 res.render("app/payment_details", params);
             });
-        }
+        },
+
+        refund: function (req, res) {
+            var credentials = req.session.credentials;
+            var MP = new app.mercadopago(credentials.access_token);
+            var payment_id = req.params.id;
+            
+            MP.get("/v1/payments/" + payment_id, function(error, r){
+                if (error) {
+                    res.json({error: error});
+                    return;
+                }
+
+                var params = {
+                    payment: r.response,
+                    moment: app.moment
+                }
+                
+                res.render("app/refund", params);
+            });
+        },
+
+        refund_action: function (req, res) {
+            var credentials = req.session.credentials;
+            var MP = new app.mercadopago(credentials.access_token);
+            var payment_id = req.params.id;
+            
+            MP.get("/v1/payments/" + payment_id, function(error, r){
+                if (error) {
+                    res.json({error: error});
+                    return;
+                }
+
+                var params = {
+                    payment: r.response,
+                    moment: app.moment
+                }
+                
+                res.render("app/refund", params);
+            });
+        },
 
     };
 

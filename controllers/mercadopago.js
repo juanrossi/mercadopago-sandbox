@@ -19,8 +19,15 @@ module.exports = function (app) {
             var access_token = req.query.access_token;
             
             //envia req e a resposta para gravar a sessao
-            Login.generateSession(req, {access_token: access_token});
-            res.redirect("/collector/payments");
+            var login = Login.generateSessionByAccessToken(req, access_token);
+
+            if(login.error != undefined){
+                res.redirect("/?error=access_token_test");
+            }else{
+                res.redirect("/collector/payments");    
+            }
+
+            
         },
 
         logout: function(req, res) {

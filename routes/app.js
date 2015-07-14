@@ -7,4 +7,7 @@ module.exports = function(app) {
     app.get('/:user_role/payments', login.isLogged, appController.list);
     app.get('/payment/details/:id', login.isLogged, appController.details);
 
+    app.get('/payment/refund', login.isLogged, appController.refund_action);
+    app.get('/payment/refund/:id', login.isLogged, appController.refund);
+
 }
