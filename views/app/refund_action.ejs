@@ -1,0 +1,26 @@
+<% include ../layout/header %>
+
+
+<div id="box-refund-msg">
+	<% if(typeof amount_refund != "undefined"){ %>
+
+		<h2><i class="ch-icon-ok-sign ch-icon-32 icon-refund"></i> Devolvemos R$ <%= parseFloat(amount_refund).toFixed(2) %> para a sua contraparte</h2>
+
+		<p>Avisamos para <%= payer_name %> (<%= payer_email %>) sobre o dinheiro.</p>
+		<p>E devolvemos os custos proporcionais por receber dinheiro.</p>
+
+		<a role="button" class="ch-btn" href="/collector/payments">Ir para Meus pagamentos recebidos</a>
+
+	<% } else { %>
+			
+		<h2> Não foi possível devolver o pagamento. </h2>
+		<p>Message: <%= message %></p>
+
+		<a role="button" class="ch-btn" href="/collector/payments">Ir para Meus pagamentos recebidos</a>
+
+
+	<% } %>
+
+</div>
+
+<% include ../layout/footer %>

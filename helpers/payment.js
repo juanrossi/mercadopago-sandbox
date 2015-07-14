@@ -51,7 +51,7 @@ module.exports = function (app) {
 		return user;
 	}
 
-	app.locals.getFormatClassAmount = function(transaction_amount) {
+	app.locals.getFormatClassAmount = function(transaction_amount, negative) {
 		//forca para string para ter a funcao de split
 		var amount = String(transaction_amount.toFixed(2));
 
@@ -59,7 +59,13 @@ module.exports = function (app) {
 		transaction_amount = amount.split(".");
 
 		var html = ""
-		html += '<span class="price-symbol">R$</span>'
+		
+		if(negative){
+			html += '<span class="price-symbol">R$ -</span>'
+		}else{
+			html += '<span class="price-symbol">R$</span>'
+		}
+
 		html += '<span class="price-integer">' + transaction_amount[0] + '</span>'
 		html += '<span class="price-decimal-mark">,</span>'
 		html += '<span class="price-decimal">' + transaction_amount[1] + '</span>'

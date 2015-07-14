@@ -71,6 +71,15 @@
 							<% } %>
 						<% }) %>
 
+						<% (payment.refunds).forEach(function(refund) { %>
+							<dt class="refund"> Devolução </dt>
+							<dd class="refund">
+								<div class="price-small">
+									<%- getFormatClassAmount(refund.amount, true) %>
+								</div>
+							</dd>
+						<% }) %>
+
 						<div class="detail_movement_total">
 							<dt class="total">Total pago</dt>
 							<dd>
@@ -87,10 +96,19 @@
 								<dt><%= fee.type %>	</dt>
 								<dd>
 									<div class="price-small">
-										<%- getFormatClassAmount(fee.amount, true) %>
+										<%- getFormatClassAmount(fee.amount) %>
 									</div>
 								</dd>
 							<% } %>
+						<% }) %>
+
+						<% (payment.refunds).forEach(function(refund) {  %>
+							<dt class="refund"> Devolução </dt>
+							<dd class="refund">
+								<div class="price-small">
+									<%- getFormatClassAmount(refund.amount) %>
+								</div>
+							</dd>
 						<% }) %>
 
 						<div class="detail_movement_total">
@@ -140,17 +158,22 @@
 			
 		</div>
 
+
+		<% if(user_role == "collector" && payment.status == "approved") { %>
+
 		<div class="payment_detail_item">
 			
 			<h3 class="detail_item_title">
 				Ações
 			</h3>
 
-			<div class="detail_item_content">
-
-			</div>
+			<ul class="actions_payment">
+				<li><a href="/payment/refund/<%= payment.id %>">Devolver Dinheiro</a></li>
+			</ul>
 			
 		</div>
+
+		<% } %>
 
 <pre>
 		<%= JSON.stringify(payment, null, 4) %>

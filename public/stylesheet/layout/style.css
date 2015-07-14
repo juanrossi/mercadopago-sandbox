@@ -249,6 +249,7 @@ header{
 	float: left;
 	width: 33.3%;
 	height: 85px;
+	position: relative;
 }
 
 .transaction_amount{
@@ -333,8 +334,8 @@ header{
 .view_detail{
 	font-size: 13px;
 	position: absolute;
-	right: 70px;
-	top: 18px;
+	right: 79px;
+  	top: 13px;
 	text-decoration: none;
 	color: #0066CC;
 }
@@ -401,7 +402,7 @@ header{
 	border: #ddd solid 1px;
 	-webkit-box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.1);
 	box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.1);
-	min-height: 110px;
+	min-height: 60px;
 	overflow: hidden;
 	padding: 0;
 }
@@ -505,6 +506,10 @@ h3.detail_item_title .operation-number{
 	margin: 5px 0;
 }
 
+.detail_movement .refund{
+	color: #999;
+}
+
 .price-small{
 	margin: -8px 0 0 0;
 }
@@ -512,7 +517,7 @@ h3.detail_item_title .operation-number{
 .price-small .price-symbol{
 	font-size: 11px;
 	line-height: 14px;
-	width: 20px;
+	width: 23px;
   	text-align: center;
 }
 
@@ -547,8 +552,41 @@ h3.detail_item_title .operation-number{
 }
 
 
+.menu-payment{
+	float: right;
+	margin: 5px 5px 0 0px;
+	padding-top: 10px;
+}
 
+.menu-options{
+	display: none;
+	position: absolute;
+	top: 37px;
+	right: 5px;
+	background-color: #fff;
+	min-width: 180px;
 
+	border: #dedede solid 1px;
+	-webkit-box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.3);
+	box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.3);
+	border: #dedede solid 1px;
+	z-index: 999;
+}
+
+.menu-options ul li a,.menu-options ul li a:visited{
+	text-align: center;
+	width: 100%;
+	float: left;
+	text-decoration: none;
+	padding: 5px 0;
+	color: #666;
+	font-size: 13px;
+}
+
+.menu-options ul li a:hover{
+	background-color: #0099e3;
+	color: #fff;
+}
 
 #paginator{
 	width: 1180px;
@@ -579,6 +617,23 @@ h3.detail_item_title .operation-number{
   background-color: #ccc;
 }
 
+.actions_payment li{
+	border-bottom: #ccc dotted 1px;
+	padding: 0 0 0 10px;
+}
+
+.actions_payment li:last-child{
+	border-bottom: 0;
+}
+
+.actions_payment li a, .actions_payment li a:visited{
+	text-decoration: none;
+	font-size: 14px;
+	text-decoration: none;
+	display: block;
+	padding: 12px 25px 12px 0px;
+	color: #06C;
+}
 
 #box-refund{
 	float: left;
@@ -695,3 +750,35 @@ h3.detail_item_title .operation-number{
 .btn-refund:hover{
   background-color: #00b2eb;
 }
+
+
+#box-refund-msg{
+	float: left;
+	padding: 0 0 0 69px;
+}
+
+#box-refund-msg h2{
+	margin: 0 0 20px 0;
+}
+
+#box-refund-msg p{
+	margin: 0;
+	padding:0;
+}
+
+#box-refund-msg .ch-btn{
+	margin:30px 0 0 0;
+}
+
+.icon-refund{
+	font-size: 40px;
+	margin: 8px 20px 0 -40px;
+	float: left;
+}
+
+
+
+.ch-btn{
+	color: #fff !important;
+}
+

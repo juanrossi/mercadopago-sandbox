@@ -5,10 +5,8 @@
 <h2>Devolver dinheiro</h2>
 
 <%
-	
 	var refunds = payment.refunds;
 	var transaction_to_refund = (payment.transaction_amount - payment.transaction_amount_refunded).toFixed(2);
-
 	var transaction_amount = payment.transaction_amount;
 %>
 
@@ -49,8 +47,7 @@
 					Valor a devolver:
 				</div>	
 				<div class="price">	
-					R$ <input autocomplete="off" type="text" class="large" name="
-					amountToRefundByUser" value="<%= transaction_to_refund %>" id="amountToRefundByUser">	
+					R$ <input autocomplete="off" type="text" class="large" name="amountToRefundByUser" value="<%= transaction_to_refund %>" id="amountToRefundByUser">	
 				</div>	
 			</li>
 
@@ -59,8 +56,8 @@
 		<div id="divTotal" class="ch-box-content box-total-amount-refund">	
 			<span class="label-total-amount-refund">Total a devolver</span>	
 			<span class="ch-price">R$</span>	
-			<span id="amountToRefund" class="ch-price"><%= transaction_to_refund %></span>	
-			<input type="hidden" name="amountToRefund" value="<%= transaction_to_refund %>">
+			<span id="amountToRefundView" class="ch-price"><%= transaction_to_refund %></span>	
+			<input type="hidden" name="amountToRefund" id="amountToRefund" value="<%= transaction_to_refund %>">
 			<input type="hidden" name="payment_id" value="<%= payment.id %>">
 		</div>
 		

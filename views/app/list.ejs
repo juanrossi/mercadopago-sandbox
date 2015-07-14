@@ -1,8 +1,9 @@
 <% include ../layout/header %>
+
 	<%
 		var title = getTitleByUserRole(user_role)
-
 	%>
+
 	<h2> <%= title.index %> </h2>
 
 	<ul id="list-payments">
@@ -39,11 +40,27 @@
 				        	| <span class="status_detail"><%= payment.status_detail %></span>
 			        	</div>
 			        	<span class="payer_nickname"><%= user_info.nickname %></span>
+			        	<span class="payer_nickname"><%= payment.payment_method_id %></span>
 					</div>
 
 					<div class="detail_item_info">
-		        		<a href="/payment/details/<%= payment.id %>" class="view_detail">Ver detalhe</a>
+		        		<a href="/payment/detail/<%= payment.id %>" class="view_detail">Ver detalhe</a>
+
+		        		<% if(user_role == "collector" && payment.status == "approved") { %>
+
+		        			<div class="menu-payment myDropdown ch-shownby-pointertap ch-dropdown-trigger ch-user-no-select ch-btn-skin ch-btn-small" aria-owns="ch-dropdown-15" aria-haspopup="true" data-side="bottom" data-align="right">
+		        				<i class="ch-icon-plus"></i>
+		        			</div>
+
+		        			<div class="menu-options">
+		        				<ul>
+		        					<li> <a href="/payment/refund/<%= payment.id %>"> Devolver dinheiro</a> </li>
+		        				</ul>
+		        			</div>
+
+		        		<% } %>
 		        	</div>
+
 	        	</div>
 
 	        </li>

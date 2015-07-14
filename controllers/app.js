@@ -109,23 +109,60 @@ module.exports = function (app) {
         },
 
         refund_action: function (req, res) {
-            var credentials = req.session.credentials;
-            var MP = new app.mercadopago(credentials.access_token);
-            var payment_id = req.params.id;
-            
-            MP.get("/v1/payments/" + payment_id, function(error, r){
-                if (error) {
-                    res.json({error: error});
-                    return;
+            var params
+            console.log(Object.keys(req.body).length);
+            if(Object.keys(req.body).length > 0){
+
+                var credentials = req.session.credentials;
+                var MP = new app.mercadopago(credentials.access_token);
+
+                var amount_user = req.body.amountToRefundByUser
+                var amount_refund = req.body.amountToRefund
+                var payment_id = req.body.payment_id
+
+                var payment_data = {
+                    amount: parseFloat(amount_user)
                 }
 
-                var params = {
-                    payment: r.response,
-                    moment: app.moment
-                }
+                app.async.parallel({
+                    refund: function(callback){
+                        MP.post("/v1/payments/" + payment_id + "/refunds", payment_data, function(error, r){
+                            callback(error, r)
+                        });
+                    },
+                    payments: function(callback){
+                        MP.get("/v1/payments/" + payment_id, function(error, r){
+                            callback(error, r)
+                        });
+                    }
+                },
                 
-                res.render("app/refund", params);
-            });
+                function(error, r) {
+
+                    params = {
+                        amount_refund: amount_user,
+                        payer_name: r.payments.response.payer.first_name,
+                        payer_email: r.payments.response.payer.email
+                    }
+
+                    if (typeof error != "undefined") {
+                        params = {
+                            error: error.error,
+                            message: error.message
+                        }
+                    }
+
+                    res.render("app/refund_action", params);
+                });
+
+            }else{
+                params = {
+                    error: "not_found",
+                    message: "Payment not found"
+                }
+
+                res.render("app/refund_action", params);
+            }
         },
 
     };
