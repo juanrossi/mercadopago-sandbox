@@ -248,7 +248,7 @@ header{
 .detail_item_info{
 	float: left;
 	width: 33.3%;
-	height: 85px;
+	min-height: 85px;
 	position: relative;
 }
 
